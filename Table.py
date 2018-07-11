@@ -1,7 +1,7 @@
 import datetime
 
 class Device():
-    def __init__(self, iden, longitude = 27.7, latitude = 27.7,active=False,neighbors= [],lifetime = datetime.datetime.now() ,timestamp = datetime.datetime.now()): 
+    def __init__(self, iden, longitude = 27.7, latitude = 27.7,active=False,neighbors= {},lifetime = datetime.datetime.now() ,timestamp = datetime.datetime.now()): 
         self.id = iden
         self.location = (longitude,latitude)
         self.timestamp = timestamp
@@ -44,21 +44,21 @@ def compare_devices(d1,d2):
     
 def main():
     time_now = datetime.datetime.now()
-    d1 = Device("111", 36.38, 45.89,True,time_now+datetime.timedelta(seconds=10000),time_now-datetime.timedelta(seconds=100))
-    d2 = Device("222", 38.13, 44.25,True,time_now+datetime.timedelta(seconds=10000),time_now-datetime.timedelta(seconds=50))
-    d3 = Device("333", 33.54, 24.83,True,time_now+datetime.timedelta(seconds=10000),time_now-datetime.timedelta(seconds=40))
-    d4 = Device("444", 34.17, 54.89,True,time_now+datetime.timedelta(seconds=10000),time_now-datetime.timedelta(seconds=30))
+    d1 = Device("111", 36.38, 45.89,True,{},time_now+datetime.timedelta(seconds=10000),time_now-datetime.timedelta(seconds=100))
+    d2 = Device("222", 38.13, 44.25,True,{},time_now+datetime.timedelta(seconds=10000),time_now-datetime.timedelta(seconds=50))
+    d3 = Device("333", 33.54, 24.83,True,{},time_now+datetime.timedelta(seconds=10000),time_now-datetime.timedelta(seconds=40))
+    d4 = Device("444", 34.17, 54.89,True,{},time_now+datetime.timedelta(seconds=10000),time_now-datetime.timedelta(seconds=30))
 
     t1 = Table({"111":d1,"222":d2,"333":d3,"444":d4})
 
-    d1 = Device("111", 10, 10,True,time_now+datetime.timedelta(seconds=10000),time_now-datetime.timedelta(seconds=0))
-    d2 = Device("222", 20, 20,True,time_now+datetime.timedelta(seconds=10000),time_now-datetime.timedelta(seconds=0))
-    d3 = Device("333", 33.54, 24.83,True,time_now+datetime.timedelta(seconds=10000),time_now-datetime.timedelta(seconds=100))
-    d4 = Device("444", 34.17, 54.89,True,time_now+datetime.timedelta(seconds=10000),time_now-datetime.timedelta(seconds=100))
+    d1 = Device("111", 10, 10,True,{},time_now+datetime.timedelta(seconds=10000),time_now-datetime.timedelta(seconds=0))
+    d2 = Device("222", 20, 20,True,{},time_now+datetime.timedelta(seconds=10000),time_now-datetime.timedelta(seconds=0))
+    d3 = Device("333", 33.54, 24.83,{},True,time_now+datetime.timedelta(seconds=10000),time_now-datetime.timedelta(seconds=100))
+    d4 = Device("444", 34.17, 54.89,{},True,time_now+datetime.timedelta(seconds=10000),time_now-datetime.timedelta(seconds=100))
 
     t2 = Table({"111":d1,"222":d2,"333":d3,"444":d4})
 
-    d1 = Device("555", 40, 40,True,time_now+datetime.timedelta(seconds=10000),time_now-datetime.timedelta(seconds=0))
+    d1 = Device("555", 40, 40,True,{},time_now+datetime.timedelta(seconds=10000),time_now-datetime.timedelta(seconds=0))
 
     t3 = Table({"555":d1,"222":d2,"333":d3,"444":d4})
     
