@@ -1,6 +1,8 @@
-def lifetime_sim(self.battary):
-    lifetime = self.battary - (random.randint(1,10) / 100.0)
-    return lifetime
+def emergency():
+    """
+    In case of emergancy. Kick me to the 1st of the queue
+    """
+    self.lifetime = 1
 
 def neighbor_update(deviceID):
     neighbors[deviceID] = datetime.datetime.now()
