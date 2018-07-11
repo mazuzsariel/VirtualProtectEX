@@ -1,20 +1,18 @@
 import datetime
 
 class Device():
-    def __init__(self, iden, longitude = 27.7, latitude = 27.7,timestamp = datetime.datetime.now()): 
+    def __init__(self, iden, longitude = 27.7, latitude = 27.7,active=False,neighbors= [],lifetime = datetime.datetime.now() ,timestamp = datetime.datetime.now()): 
         self.id = iden
         self.location = (longitude,latitude)
         self.timestamp = timestamp
         self.neighbors = neighbors
         self.lifetime = lifetime
+        self.active = active
         
 class Table():
     def __init__(self,devices):
+        self.modifed = datetime.datetime.now()
         self.devices = devices
-        
-    def update_(self,i):
-        """update table data of device id"""
-        pass
     
     def engage(self,new_table):
         """get new table, compare and update table data"""
@@ -24,43 +22,43 @@ class Table():
             if key not in self.devices:
                 self.new_record(key,new_table.devices[key])
             else:
-                d = compare_devices(self.devices[key],new_table.devices[key])
-                self.devices[key] = d
-                
+                self.update_record(key,new_table.devices[key])
+    def update_record(self,key,d):
+        d = compare_devices(self.devices[key],d)
+        self.devices[key] = d
+        self.modifed = datetime.datetime.now()
+        
     def new_record(self,key,data):
         self.devices[key] = data
-        
-    def send_broadcast(self):
-        """broadcast table"""
-        pass
+        self.modifed = datetime.datetime.now()
     
     def print_nicely(self):
         for i in self.devices:
-            print "\nid:  {}\nlocation:  ({},{})\ntime: {}".format(self.devices[i].id,self.devices[i].latitude,self.devices[i].longtiude,self.devices[i].time)
+            print "\nid:  {}\nlocation:  {}\ntime: {}".format(self.devices[i].id,self.devices[i].location,self.devices[i].timestamp)
             
 def compare_devices(d1,d2):
-    if d1.time > d2.time:
+    if d1.timestamp > d2.timestamp:
         return d1
     else:
         return d2
     
 def main():
     time_now = datetime.datetime.now()
-    d1 = Device("111", 36.38, 45.89,time_now-datetime.timedelta(seconds=100))
-    d2 = Device("222", 38.13, 44.25,time_now-datetime.timedelta(seconds=50))
-    d3 = Device("333", 33.54, 24.83,time_now-datetime.timedelta(seconds=40))
-    d4 = Device("444", 34.17, 54.89,time_now-datetime.timedelta(seconds=30))
+    d1 = Device("111", 36.38, 45.89,True,time_now+datetime.timedelta(seconds=10000),time_now-datetime.timedelta(seconds=100))
+    d2 = Device("222", 38.13, 44.25,True,time_now+datetime.timedelta(seconds=10000),time_now-datetime.timedelta(seconds=50))
+    d3 = Device("333", 33.54, 24.83,True,time_now+datetime.timedelta(seconds=10000),time_now-datetime.timedelta(seconds=40))
+    d4 = Device("444", 34.17, 54.89,True,time_now+datetime.timedelta(seconds=10000),time_now-datetime.timedelta(seconds=30))
 
     t1 = Table({"111":d1,"222":d2,"333":d3,"444":d4})
 
-    d1 = Device("111", 10, 10,time_now-datetime.timedelta(seconds=0))
-    d2 = Device("222", 20, 20,time_now-datetime.timedelta(seconds=0))
-    d3 = Device("333", 33.54, 24.83,time_now-datetime.timedelta(seconds=100))
-    d4 = Device("444", 34.17, 54.89,time_now-datetime.timedelta(seconds=100))
+    d1 = Device("111", 10, 10,True,time_now+datetime.timedelta(seconds=10000),time_now-datetime.timedelta(seconds=0))
+    d2 = Device("222", 20, 20,True,time_now+datetime.timedelta(seconds=10000),time_now-datetime.timedelta(seconds=0))
+    d3 = Device("333", 33.54, 24.83,True,time_now+datetime.timedelta(seconds=10000),time_now-datetime.timedelta(seconds=100))
+    d4 = Device("444", 34.17, 54.89,True,time_now+datetime.timedelta(seconds=10000),time_now-datetime.timedelta(seconds=100))
 
     t2 = Table({"111":d1,"222":d2,"333":d3,"444":d4})
 
-    d1 = Device("555", 40, 40,time_now-datetime.timedelta(seconds=0))
+    d1 = Device("555", 40, 40,True,time_now+datetime.timedelta(seconds=10000),time_now-datetime.timedelta(seconds=0))
 
     t3 = Table({"555":d1,"222":d2,"333":d3,"444":d4})
     
