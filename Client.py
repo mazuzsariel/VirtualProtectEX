@@ -1,6 +1,6 @@
 import socket
 import time
-
+import threading
 
 def recvmsg():
     client = socket.socket(socket.AF_INET, socket.SOCK_DGRAM) # UDP
@@ -20,4 +20,9 @@ def sendmsg():
         print("message sent!")
         time.sleep(1)
 
-    
+
+
+threading.Thread(target = recvmsg,args = ()).start()
+threading.Thread(target = sendmsg,args = ()).start()
+
+
