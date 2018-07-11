@@ -5,6 +5,10 @@ def emergency():
     self.lifetime = 1
 
 def neighbor_update(deviceID):
+    """
+    Get deviceID from it's packet.
+    1. Keep the deviceID's time on date.
+    """
     neighbors[deviceID] = datetime.datetime.now()
 
     # Check if need to delete neighbor who was inactive for 1 min.
