@@ -1,0 +1,24 @@
+######################
+class Packet():
+    def __init__(self, signature, sender, data):
+        self.signature = signature
+        self.sender = sender
+        self.data = data
+
+def buildPacket(currTable):
+    pack = Packet("MAMBO", currTable.devices["111"].id , currTable)
+    data_string = pickle.dumps(pack)
+    return cryptoPacket(data_string)
+
+def parsePacket(pack):
+    data_string = cryptoPacket(pack)
+    # Returns Packet object
+    return pickle.loads(data_string)
+
+def cryptoPacket(buf):
+    newVal = ''
+    for i in xrange(len(buf)):
+        newVal += (chr(ord(buf[i]) ^ ord(KEY[i % 4])))
+
+    return newVal
+######################
