@@ -1,0 +1,91 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<title>VPNET - Visual</title>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+	<link rel="stylesheet" href="style.css">
+
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+	<script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+	<script>
+	var url_list = Array("http://127.0.0.1:5000");
+	function date_converter(d) {
+		d = new Date(d*1000)
+		dformat = [d.getMonth()+1,
+               d.getDate(),
+               d.getFullYear()].join('/')+' '+
+              [d.getHours(),
+               d.getMinutes(),
+               d.getSeconds()].join(':');
+		return dformat;
+	}
+	function create_node(data) {
+		html = '';
+		html += '	<div class="node">';
+		html += '	  <div class="th">Device ' + data["device_id"] + '</div>';
+		html += '	  <div class="td"> ' + data["device_id"] + '</div>';
+		html += '	  <div class="td"> ' + data["location"][0] + ', ' + data["location"][1] + '</div>';
+		html += '	  <div class="td"> ' + date_converter(data["lifetime"]) + '</div>';
+		html += '	  <div class="td">' + data["neighbors"] + '</div>';
+		html += '	  <div class="td">' + data["active"] + '</div>';
+		html += '	  <div class="td">' + date_converter(data["timestamp"]) + '</div>';
+		html += '	</div>';
+		return html;
+	}
+	function update_data(id,data)
+	{		
+		
+		d = Object.keys(data["devices"]).map(k => create_node(data["devices"][k]));
+		return d.join("");		
+	}
+	function handle_url(url,i)
+	{
+     var result = null;
+	 h = '';
+	 h += ' <div class="panel panel-primary">';
+	 h += '	<div class="panel-heading"><div id="modified1">Device '+(i+1)+'</div></div>';
+	 h += '	<div class="panel-body text">';
+	 
+		h += '<div class="node">';
+		h += '	  <div class="th">Name</div>';
+		h += '	  <div class="td">Identity</div>';
+		h += '	  <div class="td">Location</div>';
+		h += '	  <div class="td">Life Time</div>';
+		h += '	  <div class="td">Neighbors</div>';
+		h += '	  <div class="td">In Mission</div>';
+		h += '	  <div class="td">Update Time</div>';
+		h += '	</div>';
+     $.ajax({
+        url: url,
+        type: 'get',
+        dataType: 'json',
+        async: false,
+        success: function(data) {
+			data = JSON.parse(data);
+            result = update_data(1,data);
+        } 
+     });
+	 h += result;
+	 h += '</div>';
+	 h += '</div>';
+     return h;
+	}
+	function run() {
+		html = ""
+		url_list.map((v,i) => html += handle_url(v,i));
+		document.getElementById("content").innerHTML = html;
+	}
+	$( document ).ready(function() {
+		run();
+		setInterval(run, 1000);
+	});
+		
+	</script>
+</head>
+<body>
+	<div id="content"></div>	
+</body>
+</html>
