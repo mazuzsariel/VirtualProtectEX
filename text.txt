@@ -1,0 +1,19 @@
+    def toJSON(self):
+        d =  self.__dict__
+        d["modified"] = time.mktime(d["modified"].timetuple())
+        for i in d["devices"]:
+            d["devices"][i] = d["devices"][i].toJSON()
+        print d
+        return d
+
+    def toJSON(self):
+        d = {}
+        d["device_id"] = self.id
+        d["location"] = self.location
+        d["lifetime"] = time.mktime(self.lifetime.timetuple())
+        d["timestamp"] = time.mktime(self.timestamp.timetuple())
+        d["active"] = self.active
+        d["neighbors"] = self.neighbors
+        return d
+
+open("table.txt","w").write(json.dumps(t1.toJSON()))
