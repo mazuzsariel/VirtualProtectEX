@@ -1,0 +1,13 @@
+##this is the configuration file for the VPex
+
+encryption_key = VPex
+
+packet_secret_header = BrianRobson
+
+Minimun_number_of_devices = 4
+
+port_to_communicate = 1049
+
+update_time = 5
+
+active = 1
