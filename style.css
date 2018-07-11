@@ -1,0 +1,40 @@
+@font-face {
+    font-weight: bold;
+}
+body {
+	font-size:12px;
+}
+.logo {
+	background:url('images/logo.png');
+	min-width:200px;
+	height:100%;
+	background-size: auto 100%;
+	background-repeat: no-repeat;
+}
+.text {
+	text-align:center;
+	margin:auto;
+	width:100%;
+	display: flex;
+}
+.
+.flex-row {
+	display: flex;
+	flex-flow: row;
+	justify-content: space-between;
+
+}
+
+.node {
+	flex:1;
+}
+.panel,.panel-heading {
+	border-radius:0px !important;
+	margin-bottom:0px;
+}
+.td {
+	border-bottom:1px solid #323232;
+}
+.th {
+	font-weight:bold;
+}
